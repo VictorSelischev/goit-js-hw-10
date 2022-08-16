@@ -6,35 +6,46 @@ const DEBOUNCE_DELAY = 300;
 const inputRef = document.querySelector('#search-box');
 const countryList = document.querySelector('.country-list');
 const countryInfo = document.querySelector('.country-info');
-
 countryList.style.padding = 0;
 
-
-fetchCountries('https://restcountries.com/v2/all?fields=name,capital,population,flags,languages')
-.then(country => {
-    console.log(country);
-    renderUserList(country);
-  })
-  .catch(error => console.log(error));
-
-
-
-
+inputRef.addEventListener('input', handleFindCountryInput);
 
 
 
 // ================================
 // FUNCTION
 
+function handleFindCountryInput(event) {
+  console.log(event.currentTarget.value);
+
+  fetchCountries(event.currentTarget.value)
+    .then(country => {
+      console.log(country);
+      renderCountriesList(country);
+    })
+    .catch(error => console.log(error));
+
+  // if (event.currentTarget.value ===  ) {
+
+  // }
+}
 
 
-function renderUserList(users) {
+function renderCountriesList(users) {
   const markup = users
     .map(user => {
-      // return `<li style="list-style: none; margin-bottom: 10px; margin-left: 10px">
-      // <img src="${user.flags.svg}" alt="Флаг ${user.name}" width=25>
-      // <span>${user.name}</span>
-      //   </li>`;
+      return `<li style="list-style: none; margin-bottom: 10px; margin-left: 10px">
+      <img src="${user.flags.svg}" alt="Флаг ${user.name.official}" width=25>
+      <span>${user.name.official}</span>
+        </li>`;
+    })
+    .join('');
+  countryList.innerHTML = markup;
+}
+
+function renderCountryInfo(users) {
+  const markup = users
+    .map(user => {
       return `<li style="list-style: none; margin-bottom: 10px; margin-left: 10px">
       <img src="${user.flags.svg}" alt="Флаг ${user.name}" width=25>
       <span style="font-size: 28px; margin-bottom: 10px"><b>${user.name}</b></span>
