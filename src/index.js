@@ -44,8 +44,8 @@ function handleFindCountryInput(event) {
       }
       else {
         renderCountryInfo(countries);
+        console.log(countries);
       }
-
       
     })
     .catch(error => console.log(error));
@@ -68,12 +68,15 @@ function renderCountriesList(users) {
 function renderCountryInfo(users) {
   const markup = users
     .map(user => {
+      const valuesLanguages = Object.values(user.languages).join(', ');
+      // console.log(valuesLanguages);
+
       return `<li style="list-style: none; margin-bottom: 10px; margin-left: 10px">
       <img src="${user.flags.svg}" alt="Флаг ${user.name.official}" width=25>
       <span style="font-size: 28px; margin-bottom: 10px"><b>${user.name.official}</b></span>
       <p style="margin-bottom: 10px"><b>Capital</b>: ${user.capital}</p>
       <p style="margin-bottom: 10px"><b>Population</b>: ${user.population}</p>
-      <p style="margin-bottom: 10px"><b>Languages</b>: ${user.languages}</p>
+      <p style="margin-bottom: 10px"><b>Languages</b>: ${valuesLanguages}</p>
         </li>`;
     })
     .join('');
