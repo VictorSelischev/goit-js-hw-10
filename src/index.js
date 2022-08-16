@@ -48,7 +48,10 @@ function handleFindCountryInput(event) {
       }
       
     })
-    .catch(error => console.log(error));
+    .catch(error => {
+      Notiflix.Notify.failure('Oops, there is no country with that name');
+      console.log(error)
+    });
   
 }
 
