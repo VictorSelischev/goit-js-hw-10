@@ -19,12 +19,20 @@ inputRef.addEventListener('input', debounce(handleFindCountryInput, DEBOUNCE_DEL
 function handleFindCountryInput(event) {
   // console.log(event);
 
-  fetchCountries(event.target.value)
+  const nameCountry = event.target.value.trim();
+  
+    if (nameCountry === '') {
+    countryList.innerHTML = '';
+    return;
+  }
+
+  fetchCountries(nameCountry)
     .then(country => {
       console.log(country);
       renderCountriesList(country);
     })
     .catch(error => console.log(error));
+  
 }
 
 
